@@ -1,9 +1,9 @@
 import 'package:hive/hive.dart';
 
-part 'ingredients.g.dart';
+part 'ingredients_box.g.dart';
 
 @HiveType(typeId: 1)
-class Ingredients extends HiveObject {
+class IngredientsBox extends HiveObject {
   @HiveField(0)
   String? text;
 

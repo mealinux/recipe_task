@@ -1,17 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_task/bindings/repositories/repository.dart';
-import 'package:recipe_task/database/favorite.dart';
-import 'package:recipe_task/database/ingredients.dart';
+import 'package:recipe_task/database/ingredients_box.dart';
+import 'package:recipe_task/database/recipe_box.dart';
+import 'package:recipe_task/repositories/repository.dart';
 import 'package:recipe_task/models/recipe_model.dart';
 import 'package:recipe_task/utils/helper_util.dart';
 
 class FavoritesController extends GetxController with HelperUtil, Repo {
   var isFavorite = false.obs;
 
+  var favorites = <RecipeBox>[].obs;
+
   @override
   void onInit() {
     super.onInit();
+
+    getFavorites();
+  }
+
+  getFavorites() async {
+    var all = await repoGetAll();
+
+    favorites.value = List<RecipeBox>.from(all);
+
+    favorites.refresh();
+  }
+
+  deleteFavorite(int index) async {
+    await repoDelete(index);
+
+    await getFavorites();
+
+    Get.snackbar('Success', 'The recipe deleted',
+        colorText: Colors.lightGreen.shade800);
   }
 
   addFavorite(RecipeModel recipe) async {
@@ -44,11 +65,11 @@ class FavoritesController extends GetxController with HelperUtil, Repo {
   }
 
   prepareRecipeForHive(RecipeModel recipe) {
-    List<Ingredients> ingredients = <Ingredients>[];
+    List<IngredientsBox> ingredients = <IngredientsBox>[];
 
     recipe.ingredients?.forEach((e) {
       ingredients.add(
-        Ingredients()
+        IngredientsBox()
           ..text = e.text
           ..food = e.food
           ..foodCategory = e.foodCategory
@@ -59,12 +80,13 @@ class FavoritesController extends GetxController with HelperUtil, Repo {
       );
     });
 
-    Favorite favorite = Favorite()
+    RecipeBox favorite = RecipeBox()
       ..name = recipe.name
       ..ingredients = ingredients
       ..instructions = recipe.instructions as dynamic
       ..thumbnail = recipe.thumbnail
-      ..cover = recipe.cover;
+      ..cover = recipe.cover
+      ..link = recipe.link;
 
     return favorite;
   }

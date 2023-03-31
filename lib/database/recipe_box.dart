@@ -1,16 +1,15 @@
 import 'package:hive/hive.dart';
-import 'package:recipe_task/database/ingredients.dart';
-import 'package:recipe_task/models/ingredients_model.dart';
+import 'package:recipe_task/database/ingredients_box.dart';
 
-part 'favorite.g.dart';
+part 'recipe_box.g.dart';
 
 @HiveType(typeId: 0)
-class Favorite extends HiveObject {
+class RecipeBox extends HiveObject {
   @HiveField(0)
   String? name;
 
   @HiveField(1)
-  List<Ingredients>? ingredients;
+  List<IngredientsBox>? ingredients;
 
   @HiveField(2)
   List<dynamic>? instructions;
@@ -20,4 +19,7 @@ class Favorite extends HiveObject {
 
   @HiveField(4)
   String? cover;
+
+  @HiveField(5)
+  String? link;
 }

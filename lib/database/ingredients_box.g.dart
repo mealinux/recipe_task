@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ingredients.dart';
+part of 'ingredients_box.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class IngredientsAdapter extends TypeAdapter<Ingredients> {
+class IngredientsBoxAdapter extends TypeAdapter<IngredientsBox> {
   @override
   final int typeId = 1;
 
   @override
-  Ingredients read(BinaryReader reader) {
+  IngredientsBox read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Ingredients()
+    return IngredientsBox()
       ..text = fields[0] as String?
       ..quantity = fields[1] as double?
       ..measure = fields[2] as String?
@@ -28,7 +28,7 @@ class IngredientsAdapter extends TypeAdapter<Ingredients> {
   }
 
   @override
-  void write(BinaryWriter writer, Ingredients obj) {
+  void write(BinaryWriter writer, IngredientsBox obj) {
     writer
       ..writeByte(8)
       ..writeByte(0)
@@ -55,7 +55,7 @@ class IngredientsAdapter extends TypeAdapter<Ingredients> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is IngredientsAdapter &&
+      other is IngredientsBoxAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
