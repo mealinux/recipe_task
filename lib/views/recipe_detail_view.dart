@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_task/components/navigation_bar.dart';
 import 'package:recipe_task/controllers/recipe_detail_controller.dart';
+import 'package:share_plus/share_plus.dart';
 
 class RecipeDetailView extends GetView<RecipeDetailController> {
   RecipeDetailView({super.key});
@@ -35,25 +36,36 @@ class RecipeDetailView extends GetView<RecipeDetailController> {
                     SizedBox(
                       height: 10.0,
                     ),
-                    Obx(() {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            onPressed: () async {
-                              await controller
-                                  .setFavoriteAdd(controller.recipe());
-                            },
-                            icon: controller.getIsFavorite()
-                                ? Icon(Icons.favorite_rounded)
-                                : Icon(Icons.favorite_outline_rounded),
-                            iconSize: 40.0,
-                            color: Colors.red.shade700,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            Share.share(
+                              'You can look below link to the recipe\n${controller.recipe().link}',
+                              subject: 'Hey, I found delicious a recipe',
+                            );
+                          },
+                          iconSize: 40.0,
+                          icon: Icon(
+                            Icons.share,
+                            color: Colors.grey.shade800,
                           ),
-                        ],
-                      );
-                    }),
+                        ),
+                        IconButton(
+                          onPressed: () async {
+                            await controller
+                                .setFavoriteAdd(controller.recipe());
+                          },
+                          icon: controller.getIsFavorite()
+                              ? Icon(Icons.favorite_rounded)
+                              : Icon(Icons.favorite_outline_rounded),
+                          iconSize: 40.0,
+                          color: Colors.red.shade700,
+                        )
+                      ],
+                    ),
                     SizedBox(
                       height: 10.0,
                     ),

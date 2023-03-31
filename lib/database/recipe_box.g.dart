@@ -1,33 +1,34 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'favorite.dart';
+part of 'recipe_box.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class FavoriteAdapter extends TypeAdapter<Favorite> {
+class RecipeBoxAdapter extends TypeAdapter<RecipeBox> {
   @override
   final int typeId = 0;
 
   @override
-  Favorite read(BinaryReader reader) {
+  RecipeBox read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Favorite()
+    return RecipeBox()
       ..name = fields[0] as String?
-      ..ingredients = (fields[1] as List?)?.cast<Ingredients>()
+      ..ingredients = (fields[1] as List?)?.cast<IngredientsBox>()
       ..instructions = (fields[2] as List?)?.cast<dynamic>()
       ..thumbnail = fields[3] as String?
-      ..cover = fields[4] as String?;
+      ..cover = fields[4] as String?
+      ..link = fields[5] as String?;
   }
 
   @override
-  void write(BinaryWriter writer, Favorite obj) {
+  void write(BinaryWriter writer, RecipeBox obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -37,7 +38,9 @@ class FavoriteAdapter extends TypeAdapter<Favorite> {
       ..writeByte(3)
       ..write(obj.thumbnail)
       ..writeByte(4)
-      ..write(obj.cover);
+      ..write(obj.cover)
+      ..writeByte(5)
+      ..write(obj.link);
   }
 
   @override
@@ -46,7 +49,7 @@ class FavoriteAdapter extends TypeAdapter<Favorite> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is FavoriteAdapter &&
+      other is RecipeBoxAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

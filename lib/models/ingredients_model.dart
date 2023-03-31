@@ -1,3 +1,5 @@
+import 'package:recipe_task/database/ingredients_box.dart';
+
 class IngredientsModel {
   final String? text;
   final double? quantity;
@@ -29,5 +31,17 @@ class IngredientsModel {
         foodCategory: json['foodCategory'],
         foodId: json['foodId'],
         image: json['image'],
+      );
+
+  factory IngredientsModel.from(IngredientsBox ingredientsBox) =>
+      IngredientsModel(
+        text: ingredientsBox.text,
+        quantity: ingredientsBox.quantity,
+        measure: ingredientsBox.measure,
+        food: ingredientsBox.food,
+        weight: ingredientsBox.weight,
+        foodCategory: ingredientsBox.foodCategory,
+        foodId: ingredientsBox.foodId,
+        image: ingredientsBox.image,
       );
 }

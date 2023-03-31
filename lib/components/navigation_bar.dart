@@ -23,7 +23,8 @@ class CustomNavigationBar extends GetView<HomeController> {
       currentIndex: index,
       selectedItemColor: Colors.deepOrangeAccent.shade400,
       onTap: (value) {
-        if (value == 0 && index != 0) {
+        if (value == 0 &&
+            (index != 0 || Get.currentRoute == '/recipe-detail')) {
           Get.offAndToNamed('/');
         }
 
