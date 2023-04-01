@@ -6,14 +6,16 @@ import 'package:recipe_task/database/ingredients_box.dart';
 import 'package:recipe_task/routes/pages.dart';
 import 'package:recipe_task/routes/routes_callback.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:recipe_task/services/filter_service.dart';
+import 'package:recipe_task/utils/filter_bottomsheet.dart';
 
 void main() async {
-  await installServices();
+  await initServices();
 
   runApp(const Main());
 }
 
-installServices() async {
+initServices() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Hive.initFlutter();
@@ -22,6 +24,8 @@ installServices() async {
   Hive.registerAdapter(RecipeBoxAdapter());
 
   await GetStorage.init();
+
+  Get.put(FilterService());
 }
 
 class Main extends StatelessWidget {

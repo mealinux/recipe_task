@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_task/components/navigation_bar.dart';
 import 'package:recipe_task/components/recipe.dart';
+import 'package:recipe_task/constants/constants.dart';
 import 'package:recipe_task/controllers/favorites_controller.dart';
 import 'package:recipe_task/models/recipe_model.dart';
+import 'package:recipe_task/routes/pages.dart';
 import 'package:swipeable_tile/swipeable_tile.dart';
 
 class FavoritesView extends GetView<FavoritesController> {
@@ -39,7 +41,7 @@ class FavoritesView extends GetView<FavoritesController> {
                           controller.circleLoading.value = true;
                         },
                         child: SwipeableTile.card(
-                          color: Colors.white,
+                          color: CONSTANT.WHITE_COLOR,
                           shadow: BoxShadow(blurRadius: 0),
                           horizontalPadding: 0,
                           verticalPadding: 0,
@@ -54,7 +56,7 @@ class FavoritesView extends GetView<FavoritesController> {
                               builder: (context, child) {
                                 return AnimatedContainer(
                                   duration: const Duration(milliseconds: 400),
-                                  color: Colors.red.shade400,
+                                  color: CONSTANT.WARNING_COLOR,
                                 );
                               },
                             );
@@ -70,7 +72,18 @@ class FavoritesView extends GetView<FavoritesController> {
                   );
           }),
         ),
-        bottomNavigationBar: CustomNavigationBar(index: 1),
+        bottomNavigationBar: CustomNavigationBar(
+          pageIndex: 1,
+          onTap: (index) {
+            if (index == 0) {
+              Get.toNamed(Routes.HOME);
+            }
+
+            if (index == 1) {
+              Get.toNamed(Routes.FAVORITES);
+            }
+          },
+        ),
       ),
     );
   }

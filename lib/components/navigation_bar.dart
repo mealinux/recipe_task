@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:recipe_task/controllers/home_controller.dart';
 
 class CustomNavigationBar extends GetView<HomeController> {
-  final int index;
+  final int pageIndex;
+  final ValueSetter<int>? onTap;
 
-  CustomNavigationBar({required this.index});
+  CustomNavigationBar({required this.pageIndex, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -20,18 +22,9 @@ class CustomNavigationBar extends GetView<HomeController> {
           label: 'My Favorites',
         ),
       ],
-      currentIndex: index,
+      currentIndex: pageIndex,
       selectedItemColor: Colors.deepOrangeAccent.shade400,
-      onTap: (value) {
-        if (value == 0 &&
-            (index != 0 || Get.currentRoute == '/recipe-detail')) {
-          Get.offAndToNamed('/');
-        }
-
-        if (value == 1 && index != 1) {
-          Get.toNamed('/favorites');
-        }
-      },
+      onTap: (index) => onTap?.call(index),
     );
   }
 }

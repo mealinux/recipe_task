@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:input_history_text_field/input_history_text_field.dart';
@@ -5,6 +6,11 @@ import 'package:recipe_task/controllers/home_controller.dart';
 import 'package:recipe_task/utils/filter_bottomsheet.dart';
 
 class SearchBar extends GetView<HomeController> {
+  final AsyncValueSetter<String>? onChanged;
+  final AsyncValueSetter<String>? onSubmitted;
+
+  SearchBar({this.onChanged, this.onSubmitted});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,14 +45,8 @@ class SearchBar extends GetView<HomeController> {
                       deleteIconColor: Colors.red.shade500,
                       textEditingController: controller.textFieldController,
                       autofocus: false,
-                      onChanged: (value) async {
-                        if (value.length < 2) {
-                          controller.lineLoading.value = false;
-                        }
-                      },
-                      onSubmitted: (value) async {
-                        await controller.searchRecipes(value);
-                      },
+                      onChanged: (value) async => onChanged?.call(value),
+                      onSubmitted: (value) async => onSubmitted?.call(value),
                       textInputAction: TextInputAction.search,
                       decoration: const InputDecoration(
                         labelText: 'Search recipes',
@@ -55,20 +55,18 @@ class SearchBar extends GetView<HomeController> {
                       ),
                     ),
                   ),
-                  Obx(() {
-                    Get.find<Filter>().getFilters();
-
-                    return Stack(
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            Filter().filterBottomsheet();
-                          },
-                          icon: Icon(Icons.filter_list_rounded),
-                          iconSize: 35.0,
-                        ),
-                        if (Get.find<Filter>().filters().isNotEmpty)
-                          Positioned(
+                  Stack(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Filter().filterBottomsheet();
+                        },
+                        icon: Icon(Icons.filter_list_rounded),
+                        iconSize: 35.0,
+                      ),
+                      Obx(() {
+                        if (controller.filterService.filters.isNotEmpty) {
+                          return Positioned(
                             right: 10.0,
                             top: 10.0,
                             child: Container(
@@ -79,10 +77,13 @@ class SearchBar extends GetView<HomeController> {
                                 borderRadius: BorderRadius.circular(15.0),
                               ),
                             ),
-                          ),
-                      ],
-                    );
-                  })
+                          );
+                        }
+
+                        return Container();
+                      }),
+                    ],
+                  ),
                 ],
               )),
         ),

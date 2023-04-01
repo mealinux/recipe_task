@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_task/components/navigation_bar.dart';
+import 'package:recipe_task/constants/constants.dart';
 import 'package:recipe_task/controllers/recipe_detail_controller.dart';
+import 'package:recipe_task/routes/pages.dart';
 import 'package:share_plus/share_plus.dart';
 
 class RecipeDetailView extends GetView<RecipeDetailController> {
@@ -13,8 +15,8 @@ class RecipeDetailView extends GetView<RecipeDetailController> {
       child: Obx(() {
         return controller.circleLoading()
             ? Container(
-                color: Colors.white,
-                child: SizedBox(
+                color: CONSTANT.WHITE_COLOR,
+                child: const SizedBox(
                   height: 50.0,
                   child: Center(
                     child: CircularProgressIndicator(),
@@ -26,14 +28,24 @@ class RecipeDetailView extends GetView<RecipeDetailController> {
                   title: Text(controller.recipe().name!),
                   centerTitle: true,
                 ),
-                bottomNavigationBar: CustomNavigationBar(index: 0),
+                bottomNavigationBar: CustomNavigationBar(
+                    pageIndex: 0,
+                    onTap: (index) {
+                      if (index == 0) {
+                        Get.toNamed(Routes.HOME);
+                      }
+
+                      if (index == 1) {
+                        Get.toNamed(Routes.FAVORITES);
+                      }
+                    }),
                 body: ListView(
                   children: [
                     Image(
                       fit: BoxFit.cover,
                       image: NetworkImage(controller.recipe().cover.toString()),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10.0,
                     ),
                     Row(
@@ -59,22 +71,22 @@ class RecipeDetailView extends GetView<RecipeDetailController> {
                                 .setFavoriteAdd(controller.recipe());
                           },
                           icon: controller.getIsFavorite()
-                              ? Icon(Icons.favorite_rounded)
-                              : Icon(Icons.favorite_outline_rounded),
+                              ? const Icon(Icons.favorite_rounded)
+                              : const Icon(Icons.favorite_outline_rounded),
                           iconSize: 40.0,
-                          color: Colors.red.shade700,
+                          color: CONSTANT.WARNING_COLOR,
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10.0,
                     ),
                     Container(
-                      padding: EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(15.0),
                       decoration: const BoxDecoration(
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black54,
+                            color: CONSTANT.LIGHT_BLACK_COLOR,
                             blurRadius: 2.0,
                             blurStyle: BlurStyle.outer,
                             offset: Offset(0.0, 0.2),
@@ -84,18 +96,18 @@ class RecipeDetailView extends GetView<RecipeDetailController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             'Ingredients',
                             style: TextStyle(
-                                fontSize: 18.0,
-                                color: Colors.grey.shade800,
+                                fontSize: CONSTANT.TITLE_TEXT_SIZE,
+                                color: CONSTANT.TEXT_COLOR,
                                 fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20.0,
                           ),
                           ListView.builder(
-                            physics: ScrollPhysics(
+                            physics: const ScrollPhysics(
                                 parent: NeverScrollableScrollPhysics()),
                             shrinkWrap: true,
                             itemCount: controller.recipe().ingredients?.length,
@@ -104,7 +116,7 @@ class RecipeDetailView extends GetView<RecipeDetailController> {
                               return Row(
                                 children: [
                                   controller.dotMark,
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 5.0,
                                   ),
                                   Flexible(
@@ -114,8 +126,8 @@ class RecipeDetailView extends GetView<RecipeDetailController> {
                                           .ingredients![index]
                                           .text
                                           .toString(),
-                                      style: TextStyle(
-                                        fontSize: 16.0,
+                                      style: const TextStyle(
+                                        fontSize: CONSTANT.CONTENT_TEXT_SIZE,
                                       ),
                                     ),
                                   )
@@ -126,15 +138,15 @@ class RecipeDetailView extends GetView<RecipeDetailController> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15.0,
                     ),
                     Container(
-                      padding: EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(15.0),
                       decoration: const BoxDecoration(
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black54,
+                            color: CONSTANT.LIGHT_BLACK_COLOR,
                             blurRadius: 2.0,
                             blurStyle: BlurStyle.outer,
                             offset: Offset(0.0, 0.2),
@@ -144,20 +156,20 @@ class RecipeDetailView extends GetView<RecipeDetailController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
+                        children: <Widget>[
+                          const Text(
                             'Instructions',
                             style: TextStyle(
-                              fontSize: 18.0,
-                              color: Colors.grey.shade800,
+                              fontSize: CONSTANT.TITLE_TEXT_SIZE,
+                              color: CONSTANT.TEXT_COLOR,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20.0,
                           ),
                           ListView.builder(
-                            physics: ScrollPhysics(
+                            physics: const ScrollPhysics(
                               parent: NeverScrollableScrollPhysics(),
                             ),
                             shrinkWrap: true,
@@ -168,9 +180,9 @@ class RecipeDetailView extends GetView<RecipeDetailController> {
                                 children: [
                                   Text(
                                     '$num: ',
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                      color: Colors.grey.shade800,
+                                    style: const TextStyle(
+                                      fontSize: CONSTANT.CONTENT_TEXT_SIZE,
+                                      color: CONSTANT.TEXT_COLOR,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -180,8 +192,8 @@ class RecipeDetailView extends GetView<RecipeDetailController> {
                                           .recipe()
                                           .instructions![index]
                                           .toString(),
-                                      style: TextStyle(
-                                        fontSize: 16.0,
+                                      style: const TextStyle(
+                                        fontSize: CONSTANT.CONTENT_TEXT_SIZE,
                                       ),
                                     ),
                                   )

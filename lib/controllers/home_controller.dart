@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recipe_task/services/filter_service.dart';
 import 'package:recipe_task/utils/filter_bottomsheet.dart';
 import 'package:recipe_task/utils/helper_util.dart';
 import 'package:recipe_task/models/recipe_model.dart';
@@ -13,6 +14,8 @@ class HomeController extends GetxController with HelperUtil, ApiService {
 
   List<String> history = <String>[].obs;
 
+  var filterService = Get.find<FilterService>();
+
   @override
   onInit() {
     super.onInit();
@@ -21,7 +24,7 @@ class HomeController extends GetxController with HelperUtil, ApiService {
   searchRecipes(String searchText) async {
     lineLoading.value = true;
 
-    var filtersText = Get.find<Filter>().filterText();
+    var filtersText = filterService.filterQueryText();
 
     var response = await get(query: searchText, filters: filtersText);
 
