@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recipe_task/utils/filter_bottomsheet.dart';
 import 'package:recipe_task/utils/helper_util.dart';
 import 'package:recipe_task/models/recipe_model.dart';
 import 'package:recipe_task/services/api_service.dart';
-import 'package:recipe_task/utils/search_history.dart';
 
-class HomeController extends GetxController with HelperUtil {
+class HomeController extends GetxController with HelperUtil, ApiService {
   List<RecipeModel> recipes = <RecipeModel>[].obs;
-  var apiService = ApiService();
 
   late TextEditingController textFieldController =
       TextEditingController(text: '');
 
   List<String> history = <String>[].obs;
 
+  @override
+  onInit() {
+    super.onInit();
+  }
+
   searchRecipes(String searchText) async {
     lineLoading.value = true;
-    var response = await apiService.get(query: searchText);
+
+    var filtersText = Get.find<Filter>().filterText();
+
+    var response = await get(query: searchText, filters: filtersText);
 
     var data = response['hits']
         .map<RecipeModel>((data) => RecipeModel.fromJson(data['recipe']))
