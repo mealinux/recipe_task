@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:recipe_task/constants/constants.dart';
 import 'package:recipe_task/controllers/home_controller.dart';
 
 class CustomNavigationBar extends GetView<HomeController> {
@@ -22,8 +23,9 @@ class CustomNavigationBar extends GetView<HomeController> {
           label: 'My Favorites',
         ),
       ],
+      backgroundColor: CONSTANT.NAVIGATOR_COLOR,
       currentIndex: pageIndex,
-      selectedItemColor: Colors.deepOrangeAccent.shade400,
+      selectedItemColor: CONSTANT.ALERT_COLOR,
       onTap: (index) => onTap?.call(index),
     );
   }

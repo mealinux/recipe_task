@@ -16,8 +16,11 @@ class FavoritesView extends GetView<FavoritesController> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('My Favorites'),
+          title: const Text('My Favorites'),
           centerTitle: true,
+          backgroundColor: CONSTANT.APPBAR_COLOR,
+          toolbarHeight: CONSTANT.TOOLBAR_HEIGHT,
+          automaticallyImplyLeading: false,
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -42,7 +45,7 @@ class FavoritesView extends GetView<FavoritesController> {
                         },
                         child: SwipeableTile.card(
                           color: CONSTANT.WHITE_COLOR,
-                          shadow: BoxShadow(blurRadius: 0),
+                          shadow: const BoxShadow(blurRadius: 0),
                           horizontalPadding: 0,
                           verticalPadding: 0,
                           direction: SwipeDirection.horizontal,
@@ -67,7 +70,7 @@ class FavoritesView extends GetView<FavoritesController> {
                       );
                     },
                   )
-                : Center(
+                : const Center(
                     child: Text('No recipes'),
                   );
           }),
@@ -80,7 +83,7 @@ class FavoritesView extends GetView<FavoritesController> {
             }
 
             if (index == 1) {
-              Get.toNamed(Routes.FAVORITES);
+              Get.offAndToNamed(Routes.FAVORITES);
             }
           },
         ),

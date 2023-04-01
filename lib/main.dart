@@ -7,7 +7,7 @@ import 'package:recipe_task/routes/pages.dart';
 import 'package:recipe_task/routes/routes_callback.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:recipe_task/services/filter_service.dart';
-import 'package:recipe_task/utils/filter_bottomsheet.dart';
+import 'package:recipe_task/services/history_service.dart';
 
 void main() async {
   await initServices();
@@ -26,6 +26,7 @@ initServices() async {
   await GetStorage.init();
 
   Get.put(FilterService());
+  Get.put(HistoryService());
 }
 
 class Main extends StatelessWidget {

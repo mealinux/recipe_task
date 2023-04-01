@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:recipe_task/constants/constants.dart';
 import 'package:recipe_task/controllers/home_controller.dart';
 import 'package:recipe_task/services/api_service.dart';
 import 'package:recipe_task/services/filter_service.dart';
@@ -18,6 +19,7 @@ class Filter extends GetxController with ApiService {
           appBar: AppBar(
             title: const Text('Filters'),
             toolbarHeight: 40.0,
+            backgroundColor: CONSTANT.APPBAR_COLOR,
             automaticallyImplyLeading: false,
             actions: [
               IconButton(

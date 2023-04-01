@@ -38,7 +38,16 @@ class CONSTANT {
 
   static const ALERT_COLOR = Color(0xCFF0F0F0);
 
-  /* TEXT SIZE */
+  static const NAVIGATOR_COLOR = Color.fromRGBO(128, 85, 140, 1);
+  static const APPBAR_COLOR = Color.fromRGBO(101, 93, 138, 1);
+
+  /* Text Size */
   static const CONTENT_TEXT_SIZE = 16.0;
   static const TITLE_TEXT_SIZE = 18.0;
+
+  /* Toolbar(Appbar) Size */
+  static const TOOLBAR_HEIGHT = 40.0;
+
+  /* Border Radius Size */
+  static const BORDER_RADIUS_SIZE = 15.0;
 }

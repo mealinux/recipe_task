@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:recipe_task/constants/constants.dart';
-import 'package:recipe_task/utils/helper_util.dart';
 
 mixin ApiService on GetxController {
   var client = http.Client();

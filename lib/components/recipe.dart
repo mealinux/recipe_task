@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recipe_task/constants/constants.dart';
 import 'package:recipe_task/models/recipe_model.dart';
 
 class Recipe extends StatelessWidget {
@@ -10,12 +11,20 @@ class Recipe extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(CONSTANT.BORDER_RADIUS_SIZE),
+        border: Border.all(color: Colors.grey.shade400),
+      ),
       child: Row(
         children: [
-          Image(
-            width: 100.0,
-            image: NetworkImage(recipe.thumbnail.toString()),
+          ClipRRect(
+            borderRadius:
+                BorderRadius.all(Radius.circular(CONSTANT.BORDER_RADIUS_SIZE)),
+            child: Image(
+              width: 100.0,
+              image: NetworkImage(recipe.thumbnail.toString()),
+            ),
           ),
           SizedBox(
             width: 10.0,
