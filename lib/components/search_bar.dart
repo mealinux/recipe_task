@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:input_history_text_field/input_history_text_field.dart';
 import 'package:recipe_task/controllers/home_controller.dart';
+import 'package:recipe_task/utils/filter_bottomsheet.dart';
 
 class SearchBar extends GetView<HomeController> {
   @override
@@ -54,11 +55,34 @@ class SearchBar extends GetView<HomeController> {
                       ),
                     ),
                   ),
-                  IconButton(
-                    onPressed: () async {},
-                    icon: Icon(Icons.filter_list_rounded),
-                    iconSize: 35.0,
-                  )
+                  Obx(() {
+                    Get.find<Filter>().getFilters();
+
+                    return Stack(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            Filter().filterBottomsheet();
+                          },
+                          icon: Icon(Icons.filter_list_rounded),
+                          iconSize: 35.0,
+                        ),
+                        if (Get.find<Filter>().filters().isNotEmpty)
+                          Positioned(
+                            right: 10.0,
+                            top: 10.0,
+                            child: Container(
+                              width: 12.0,
+                              height: 12.0,
+                              decoration: BoxDecoration(
+                                color: Colors.green,
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                            ),
+                          ),
+                      ],
+                    );
+                  })
                 ],
               )),
         ),
