@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:recipe_task/controllers/favorites_controller.dart';
+import 'package:recipe_task/routes/pages.dart';
 import 'package:recipe_task/utils/helper_util.dart';
 import 'package:recipe_task/models/recipe_model.dart';
 
@@ -12,19 +13,23 @@ class RecipeDetailController extends GetxController with HelperUtil {
   void onInit() {
     super.onInit();
 
-    Get.lazyPut(() => FavoritesController());
+    if (!Get.isRegistered<FavoritesController>()) {
+      Get.lazyPut(() => FavoritesController());
+    }
 
     favoriteController = Get.find<FavoritesController>();
-
-    getRecipeDetail(Get.arguments);
   }
 
-  getRecipeDetail(RecipeModel paramRecipe) {
+  getRecipeDetail(RecipeModel? paramRecipe) {
+    if (paramRecipe == null) return;
+
     recipe.value = paramRecipe;
 
     circleLoading.value = false;
 
     favoriteController?.checkFavorite(recipe().name.toString());
+
+    Get.toNamed(Routes.RECIPE_DETAIL);
   }
 
   getIsFavorite() {

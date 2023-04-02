@@ -6,8 +6,6 @@ mixin HelperUtil on GetxController {
   var lineLoading = false.obs;
   var circleLoading = false.obs;
 
-  var keyboardHeight = Get.mediaQuery.viewInsets.bottom.obs;
-
   Widget dotMark = Container(
     height: 8.0,
     width: 8.0,

@@ -5,6 +5,7 @@ import 'package:recipe_task/components/recipe.dart';
 import 'package:recipe_task/constants/constants.dart';
 import 'package:recipe_task/controllers/favorites_controller.dart';
 import 'package:recipe_task/controllers/random_recipe_controller.dart';
+import 'package:recipe_task/controllers/recipe_detail_controller.dart';
 import 'package:recipe_task/models/recipe_model.dart';
 import 'package:recipe_task/routes/pages.dart';
 import 'package:swipeable_tile/swipeable_tile.dart';
@@ -41,8 +42,18 @@ class FavoritesView extends GetView<FavoritesController> {
                           RecipeModel.from(controller.favorites()[index]);
                       return InkWell(
                         onTap: () {
-                          Get.toNamed(Routes.RECIPE_DETAIL,
-                              arguments: recipeModel);
+                          var recipe =
+                              RecipeModel.from(controller.favorites()[index]);
+
+                          if (!Get.isRegistered<RecipeDetailController>()) {
+                            Get.lazyPut(() => RecipeDetailController());
+                          }
+
+                          var recipeDetailController =
+                              Get.find<RecipeDetailController>();
+
+                          recipeDetailController.getRecipeDetail(recipe);
+
                           controller.circleLoading.value = true;
                         },
                         child: SwipeableTile.card(
