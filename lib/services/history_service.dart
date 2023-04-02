@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-class SearchHistory extends GetxController {
+class HistoryService extends GetxController {
   GetStorage historyStorage = GetStorage();
 
   getHistory() {
@@ -14,6 +14,14 @@ class SearchHistory extends GetxController {
     if (!histories.contains(text)) {
       histories.add(text);
     }
+
+    historyStorage.write('history', histories);
+  }
+
+  deleteHistory(int index) {
+    List<dynamic> histories = getHistory();
+
+    histories.removeAt(index);
 
     historyStorage.write('history', histories);
   }

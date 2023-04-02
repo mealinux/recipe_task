@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_task/utils/filter_bottomsheet.dart';
+import 'package:recipe_task/services/filter_service.dart';
+import 'package:recipe_task/services/history_service.dart';
 import 'package:recipe_task/utils/helper_util.dart';
 import 'package:recipe_task/models/recipe_model.dart';
 import 'package:recipe_task/services/api_service.dart';
@@ -13,17 +14,37 @@ class HomeController extends GetxController with HelperUtil, ApiService {
 
   List<String> history = <String>[].obs;
 
+  var focusNode = FocusNode();
+
+  var historyService = Get.find<HistoryService>();
+
+  var filterService = Get.find<FilterService>();
+
   @override
   onInit() {
     super.onInit();
+
+    focusNode.addListener(onFocus);
+
+    filterService.getFilters();
+  }
+
+  void onFocus() {
+    if (focusNode.hasFocus) {
+      List<String> allHistory = List<String>.from(historyService.getHistory());
+
+      history.addAll(allHistory);
+    } else {
+      history.clear();
+    }
   }
 
   searchRecipes(String searchText) async {
     lineLoading.value = true;
 
-    var filtersText = Get.find<Filter>().filterText();
+    var filtersText = filterService.filterQueryText();
 
-    var response = await get(query: searchText, filters: filtersText);
+    var response = await httpGet(query: searchText, filters: filtersText);
 
     var data = response['hits']
         .map<RecipeModel>((data) => RecipeModel.fromJson(data['recipe']))
@@ -32,22 +53,22 @@ class HomeController extends GetxController with HelperUtil, ApiService {
     recipes.clear();
     recipes.addAll(data);
 
-    /*  historyEvent(searchText); */
+    saveHistory(searchText);
 
     lineLoading.value = false;
   }
 
-  /* historyEvent(String text) {
-    if (!Get.isRegistered<SearchHistory>()) {
-      Get.lazyPut(() => SearchHistory());
-    }
+  saveHistory(String text) {
+    historyService.addHistory(text);
+  }
 
-    var searchHistory = Get.find<SearchHistory>();
+  deleteHistory(int index) {
+    historyService.deleteHistory(index);
 
-    searchHistory.addHistory(text);
+    history.removeAt(index);
+  }
 
-    var texts = searchHistory.getHistory();
-
-    print(texts);
-  } */
+  getHistory() {
+    history.add(historyService.getHistory());
+  }
 }

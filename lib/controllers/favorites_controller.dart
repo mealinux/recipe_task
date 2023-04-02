@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recipe_task/constants/constants.dart';
 import 'package:recipe_task/database/ingredients_box.dart';
 import 'package:recipe_task/database/recipe_box.dart';
 import 'package:recipe_task/repositories/repository.dart';
@@ -31,8 +32,12 @@ class FavoritesController extends GetxController with HelperUtil, Repo {
 
     await getFavorites();
 
-    Get.snackbar('Success', 'The recipe deleted',
-        colorText: Colors.lightGreen.shade800);
+    Get.snackbar(
+      CONSTANT.SUCCESS_TITLE,
+      CONSTANT.SUCCESS_DELETED_MESSAGE,
+      colorText: CONSTANT.SUCCESS_COLOR,
+      backgroundColor: CONSTANT.ALERT_COLOR,
+    );
   }
 
   addFavorite(RecipeModel recipe) async {
@@ -40,10 +45,10 @@ class FavoritesController extends GetxController with HelperUtil, Repo {
 
     if (await repoCheck(recipe.name.toString())) {
       Get.snackbar(
-        'Warning',
-        'The recipe already exists in your favorites',
-        colorText: Colors.deepOrange.shade800,
-        backgroundColor: Colors.white60,
+        CONSTANT.WARNING_TITLE,
+        CONSTANT.WARNING_MESSAGE,
+        colorText: CONSTANT.WARNING_COLOR,
+        backgroundColor: CONSTANT.ALERT_COLOR,
       );
       return;
     }
@@ -51,10 +56,10 @@ class FavoritesController extends GetxController with HelperUtil, Repo {
     await repoAdd(favorite);
 
     Get.snackbar(
-      'Success',
-      'The recipe added your favorites',
-      colorText: Colors.green.shade800,
-      backgroundColor: Colors.white60,
+      CONSTANT.SUCCESS_TITLE,
+      CONSTANT.SUCCESS_ADDED_MESSAGE,
+      colorText: CONSTANT.SUCCESS_COLOR,
+      backgroundColor: CONSTANT.ALERT_COLOR,
     );
 
     await checkFavorite(recipe.name.toString());

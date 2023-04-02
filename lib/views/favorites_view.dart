@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_task/components/navigation_bar.dart';
 import 'package:recipe_task/components/recipe.dart';
+import 'package:recipe_task/constants/constants.dart';
 import 'package:recipe_task/controllers/favorites_controller.dart';
+import 'package:recipe_task/controllers/random_recipe_controller.dart';
 import 'package:recipe_task/models/recipe_model.dart';
+import 'package:recipe_task/routes/pages.dart';
 import 'package:swipeable_tile/swipeable_tile.dart';
 
 class FavoritesView extends GetView<FavoritesController> {
@@ -14,8 +17,11 @@ class FavoritesView extends GetView<FavoritesController> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('My Favorites'),
+          title: const Text('My Favorites'),
           centerTitle: true,
+          backgroundColor: CONSTANT.APPBAR_COLOR,
+          toolbarHeight: CONSTANT.TOOLBAR_HEIGHT,
+          automaticallyImplyLeading: false,
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -35,12 +41,13 @@ class FavoritesView extends GetView<FavoritesController> {
                           RecipeModel.from(controller.favorites()[index]);
                       return InkWell(
                         onTap: () {
-                          Get.toNamed('/recipe-detail', arguments: recipeModel);
+                          Get.toNamed(Routes.RECIPE_DETAIL,
+                              arguments: recipeModel);
                           controller.circleLoading.value = true;
                         },
                         child: SwipeableTile.card(
-                          color: Colors.white,
-                          shadow: BoxShadow(blurRadius: 0),
+                          color: CONSTANT.WHITE_COLOR,
+                          shadow: const BoxShadow(blurRadius: 0),
                           horizontalPadding: 0,
                           verticalPadding: 0,
                           direction: SwipeDirection.horizontal,
@@ -54,7 +61,7 @@ class FavoritesView extends GetView<FavoritesController> {
                               builder: (context, child) {
                                 return AnimatedContainer(
                                   duration: const Duration(milliseconds: 400),
-                                  color: Colors.red.shade400,
+                                  color: CONSTANT.WARNING_COLOR,
                                 );
                               },
                             );
@@ -65,12 +72,33 @@ class FavoritesView extends GetView<FavoritesController> {
                       );
                     },
                   )
-                : Center(
+                : const Center(
                     child: Text('No recipes'),
                   );
           }),
         ),
-        bottomNavigationBar: CustomNavigationBar(index: 1),
+        bottomNavigationBar: CustomNavigationBar(
+          pageIndex: 1,
+          onTap: (index) async {
+            if (index == 0) {
+              Get.toNamed(Routes.HOME);
+            }
+
+            if (index == 1) {
+              if (!Get.isRegistered<RandomRecipeController>()) {
+                Get.lazyPut(() => RandomRecipeController());
+              }
+
+              var randomRecipeController = Get.find<RandomRecipeController>();
+
+              await randomRecipeController.getRandom();
+            }
+
+            if (index == 2) {
+              Get.offAndToNamed(Routes.FAVORITES);
+            }
+          },
+        ),
       ),
     );
   }

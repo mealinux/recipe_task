@@ -7,9 +7,11 @@ import 'package:recipe_task/constants/constants.dart';
 mixin ApiService on GetxController {
   var client = http.Client();
 
-  Future get({String query = '', String filters = ''}) async {
-    var requestUri = Uri.parse('${CONSTANT.SEARCH_URL}&q=$query&$filters');
-    print(requestUri);
+  Future httpGet(
+      {String query = '', String filters = '', String random_url = ''}) async {
+    var requestUri =
+        Uri.parse('${CONSTANT.SEARCH_URL}&q=$query&$filters&$random_url');
+
     var response =
         await client.get(requestUri, headers: {'Accept-Encoding': 'gzip'});
 
