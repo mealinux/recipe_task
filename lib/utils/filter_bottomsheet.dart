@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:recipe_task/constants/constants.dart';
 import 'package:recipe_task/controllers/home_controller.dart';
 import 'package:recipe_task/services/api_service.dart';
@@ -13,7 +12,7 @@ class Filter extends GetxController with ApiService {
     filterService.getFilters();
 
     return Get.bottomSheet(
-      Container(
+      SizedBox(
         height: Get.height * 0.5,
         child: Scaffold(
           appBar: AppBar(
@@ -44,7 +43,7 @@ class Filter extends GetxController with ApiService {
             ],
           ),
           body: Center(
-            child: Container(
+            child: SizedBox(
                 width: Get.width * 0.7,
                 height: Get.height * 0.5,
                 child: Obx(() {
