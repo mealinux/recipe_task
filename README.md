@@ -1,7 +1,7 @@
 ## Search Recipe and Add Favorite
 
 
-First get a app_id and a app_key
+First get a `app_id` and a `app_key`
 
 from `https://developer.edamam.com/edamam-recipe-api`
 
@@ -25,7 +25,6 @@ move to inside
 
     flutter pub get
     flutter run
-
 
 **DEMO**
 
