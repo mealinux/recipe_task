@@ -26,6 +26,7 @@ move to inside
     flutter pub get
     flutter run
 
+
 **DEMO**
 
 https://user-images.githubusercontent.com/10341948/229366590-bfb7500b-bb65-4964-bbbe-dea3491465fa.mp4
