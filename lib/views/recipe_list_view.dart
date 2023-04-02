@@ -27,9 +27,6 @@ class RecipeListView extends GetView<HomeController> {
                     itemBuilder: (BuildContext context, int index) {
                       return InkWell(
                         onTap: () {
-                          /* Get.toNamed(Routes.RECIPE_DETAIL,
-                              arguments: controller.recipes[index]); */
-
                           if (!Get.isRegistered<RecipeDetailController>()) {
                             Get.lazyPut(() => RecipeDetailController());
                           }

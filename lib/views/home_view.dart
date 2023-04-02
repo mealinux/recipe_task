@@ -15,6 +15,7 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Obx(() {
+        List<String> historyDesc = controller.history.reversed.toList();
         return Column(
           children: [
             controller.lineLoading()
@@ -44,9 +45,9 @@ class HomeView extends GetView<HomeController> {
                     onTapHistoryDelete: (index) {
                       controller.deleteHistory(index);
                     },
+                    filters: controller.filterService.filters(),
                     focusNode: controller.focusNode,
-                    history: controller.history,
-                    filterService: controller.filterService,
+                    history: historyDesc,
                     onTapFilter: () {
                       Filter().filterBottomsheet();
                       controller.focusNode.unfocus();
