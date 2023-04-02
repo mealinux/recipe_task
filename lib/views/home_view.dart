@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:recipe_task/components/navigation_bar.dart';
 import 'package:recipe_task/components/search_bar.dart';
 import 'package:recipe_task/controllers/home_controller.dart';
+import 'package:recipe_task/controllers/random_recipe_controller.dart';
 import 'package:recipe_task/routes/pages.dart';
 import 'package:recipe_task/utils/filter_bottomsheet.dart';
 import 'package:recipe_task/views/recipe_list_view.dart';
@@ -52,12 +53,22 @@ class HomeView extends GetView<HomeController> {
         ),
         bottomNavigationBar: CustomNavigationBar(
             pageIndex: 0,
-            onTap: (index) {
+            onTap: (index) async {
               if (index == 0) {
                 Get.toNamed(Routes.HOME);
               }
 
               if (index == 1) {
+                if (!Get.isRegistered<RandomRecipeController>()) {
+                  Get.lazyPut(() => RandomRecipeController());
+                }
+
+                var randomRecipeController = Get.find<RandomRecipeController>();
+
+                await randomRecipeController.getRandom();
+              }
+
+              if (index == 2) {
                 Get.offAndToNamed(Routes.FAVORITES);
               }
             }),

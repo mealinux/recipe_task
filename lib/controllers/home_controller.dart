@@ -25,6 +25,8 @@ class HomeController extends GetxController with HelperUtil, ApiService {
     super.onInit();
 
     focusNode.addListener(onFocus);
+
+    filterService.getFilters();
   }
 
   void onFocus() {
@@ -42,7 +44,7 @@ class HomeController extends GetxController with HelperUtil, ApiService {
 
     var filtersText = filterService.filterQueryText();
 
-    var response = await get(query: searchText, filters: filtersText);
+    var response = await httpGet(query: searchText, filters: filtersText);
 
     var data = response['hits']
         .map<RecipeModel>((data) => RecipeModel.fromJson(data['recipe']))

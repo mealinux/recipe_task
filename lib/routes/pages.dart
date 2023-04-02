@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
 import 'package:recipe_task/bindings/favorites_binding.dart';
 import 'package:recipe_task/bindings/home_binding.dart';
+import 'package:recipe_task/bindings/random_recipe_binding.dart';
 import 'package:recipe_task/bindings/recipe_detail_binding.dart';
 import 'package:recipe_task/views/favorites_view.dart';
 import 'package:recipe_task/views/home_view.dart';
+import 'package:recipe_task/views/random_recipe_view.dart';
 import 'package:recipe_task/views/recipe_detail_view.dart';
 
 part 'routes.dart';
@@ -32,6 +34,12 @@ class Pages {
       name: Routes.FAVORITES,
       page: () => FavoritesView(),
       binding: FavoritesBinding(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: Routes.RANDOM_RECIPE,
+      page: () => RandomRecipeView(),
+      binding: RandomRecipeBinding(),
       transition: Transition.noTransition,
     ),
   ];

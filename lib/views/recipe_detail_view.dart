@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_task/components/navigation_bar.dart';
 import 'package:recipe_task/constants/constants.dart';
+import 'package:recipe_task/controllers/random_recipe_controller.dart';
 import 'package:recipe_task/controllers/recipe_detail_controller.dart';
 import 'package:recipe_task/routes/pages.dart';
 import 'package:share_plus/share_plus.dart';
 
 class RecipeDetailView extends GetView<RecipeDetailController> {
-  RecipeDetailView({super.key});
+  final bool showNavigatorbar;
+
+  RecipeDetailView({super.key, this.showNavigatorbar = true});
 
   @override
   Widget build(BuildContext context) {
@@ -30,17 +33,30 @@ class RecipeDetailView extends GetView<RecipeDetailController> {
                   backgroundColor: CONSTANT.APPBAR_COLOR,
                   toolbarHeight: CONSTANT.TOOLBAR_HEIGHT,
                 ),
-                bottomNavigationBar: CustomNavigationBar(
-                    pageIndex: 0,
-                    onTap: (index) {
-                      if (index == 0) {
-                        Get.toNamed(Routes.HOME);
-                      }
+                bottomNavigationBar: showNavigatorbar
+                    ? CustomNavigationBar(
+                        pageIndex: 0,
+                        onTap: (index) async {
+                          if (index == 0) {
+                            Get.toNamed(Routes.HOME);
+                          }
 
-                      if (index == 1) {
-                        Get.offAndToNamed(Routes.FAVORITES);
-                      }
-                    }),
+                          if (index == 1) {
+                            if (!Get.isRegistered<RandomRecipeController>()) {
+                              Get.lazyPut(() => RandomRecipeController());
+                            }
+
+                            var randomRecipeController =
+                                Get.find<RandomRecipeController>();
+
+                            await randomRecipeController.getRandom();
+                          }
+
+                          if (index == 2) {
+                            Get.offAndToNamed(Routes.FAVORITES);
+                          }
+                        })
+                    : null,
                 body: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -48,7 +64,7 @@ class RecipeDetailView extends GetView<RecipeDetailController> {
                         height: 10.0,
                       ),
                       ClipRRect(
-                        borderRadius: BorderRadius.all(
+                        borderRadius: const BorderRadius.all(
                             Radius.circular(CONSTANT.BORDER_RADIUS_SIZE)),
                         child: Image(
                           fit: BoxFit.fill,
@@ -158,7 +174,7 @@ class RecipeDetailView extends GetView<RecipeDetailController> {
                       ),
                       Container(
                         padding: const EdgeInsets.all(15.0),
-                        margin: EdgeInsets.only(bottom: 15.0),
+                        margin: const EdgeInsets.only(bottom: 15.0),
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(
                               Radius.circular(CONSTANT.BORDER_RADIUS_SIZE)),

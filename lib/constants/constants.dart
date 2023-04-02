@@ -13,6 +13,9 @@ class CONSTANT {
   /* URL Settings */
   static const BASE_URL = 'https://api.edamam.com/api/recipes';
 
+  static const RANDOM_URL_QUERY =
+      'cuisineType=American&cuisineType=Asian&cuisineType=British&cuisineType=Italian&cuisineType=Mediterranean&cuisineType=Middle%20Eastern&random=true';
+
   static const SEARCH_URL =
       '$BASE_URL/$API_VERSION?type=$TYPE&app_id=$APP_ID&app_key=$API_KEY';
 
@@ -38,8 +41,8 @@ class CONSTANT {
 
   static const ALERT_COLOR = Color(0xCFF0F0F0);
 
-  static const NAVIGATOR_COLOR = Color.fromRGBO(128, 85, 140, 1);
-  static const APPBAR_COLOR = Color.fromRGBO(101, 93, 138, 1);
+  static const NAVIGATOR_COLOR = Color(0xFF80558C);
+  static const APPBAR_COLOR = Color(0xFF655D8A);
 
   /* Text Size */
   static const CONTENT_TEXT_SIZE = 16.0;
