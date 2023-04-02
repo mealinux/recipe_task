@@ -20,7 +20,10 @@ class CustomNavigationBar extends GetView<HomeController> {
         ),
         BottomNavigationBarItem(
           icon: Container(
+            width: 35.0,
+            height: 35.0,
             decoration: BoxDecoration(
+              color: CONSTANT.APPBAR_COLOR,
               border: Border.all(color: CONSTANT.LIGHT_BLACK_COLOR, width: 2.0),
               borderRadius: const BorderRadius.all(
                 Radius.circular(15.0),

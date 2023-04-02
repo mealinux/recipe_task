@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_task/components/recipe.dart';
 import 'package:recipe_task/controllers/home_controller.dart';
-import 'package:recipe_task/routes/pages.dart';
+import 'package:recipe_task/controllers/recipe_detail_controller.dart';
 
 class RecipeListView extends GetView<HomeController> {
   RecipeListView({super.key});
@@ -27,8 +27,19 @@ class RecipeListView extends GetView<HomeController> {
                     itemBuilder: (BuildContext context, int index) {
                       return InkWell(
                         onTap: () {
-                          Get.toNamed(Routes.RECIPE_DETAIL,
-                              arguments: controller.recipes[index]);
+                          /* Get.toNamed(Routes.RECIPE_DETAIL,
+                              arguments: controller.recipes[index]); */
+
+                          if (!Get.isRegistered<RecipeDetailController>()) {
+                            Get.lazyPut(() => RecipeDetailController());
+                          }
+
+                          var recipeDetailController =
+                              Get.find<RecipeDetailController>();
+
+                          recipeDetailController
+                              .getRecipeDetail(controller.recipes[index]);
+
                           controller.circleLoading.value = true;
                         },
                         child: Recipe(
