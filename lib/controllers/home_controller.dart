@@ -33,6 +33,7 @@ class HomeController extends GetxController with HelperUtil, ApiService {
     if (focusNode.hasFocus) {
       List<String> allHistory = List<String>.from(historyService.getHistory());
 
+      allHistory = allHistory.reversed.toList();
       history.addAll(allHistory);
     } else {
       history.clear();
@@ -69,6 +70,7 @@ class HomeController extends GetxController with HelperUtil, ApiService {
   }
 
   getHistory() {
-    history.add(historyService.getHistory());
+    history = historyService.getHistory();
+    history.addAll(history.reversed.toList());
   }
 }
