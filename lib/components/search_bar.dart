@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_task/constants/constants.dart';
 import 'package:recipe_task/controllers/home_controller.dart';
-import 'package:recipe_task/services/filter_service.dart';
 
 class SearchBar extends GetView<HomeController> {
   final AsyncValueSetter<String>? onChanged;
@@ -14,7 +13,7 @@ class SearchBar extends GetView<HomeController> {
 
   final List<String>? history;
   final FocusNode? focusNode;
-  final FilterService? filterService;
+  final List? filters;
 
   SearchBar({
     this.onChanged,
@@ -23,8 +22,8 @@ class SearchBar extends GetView<HomeController> {
     this.history,
     this.onTapHistory,
     this.onTapHistoryDelete,
-    this.filterService,
     this.onTapFilter,
+    this.filters,
   });
 
   @override
@@ -63,7 +62,7 @@ class SearchBar extends GetView<HomeController> {
                     onSubmitted: (value) async => onSubmitted?.call(value),
                     textInputAction: TextInputAction.search,
                     decoration: const InputDecoration(
-                      labelText: 'Search recipes',
+                      labelText: 'Search recipes or ingredients',
                       fillColor: CONSTANT.WHITE_COLOR,
                       border: OutlineInputBorder(),
                     ),
@@ -83,14 +82,15 @@ class SearchBar extends GetView<HomeController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               GestureDetector(
-                                onTap: () async => onTapHistory?.call(index),
+                                onTap: () async =>
+                                    await onTapHistory?.call(index),
                                 child: Row(
                                   children: [
                                     const Icon(Icons.restore_rounded),
                                     const SizedBox(
                                       width: 5.0,
                                     ),
-                                    Text(controller.history[index]),
+                                    Text(history![index]),
                                   ],
                                 ),
                               ),
@@ -116,7 +116,7 @@ class SearchBar extends GetView<HomeController> {
                 color: CONSTANT.TEXT_COLOR,
                 iconSize: 35.0,
               ),
-              if (filterService!.filters.isNotEmpty)
+              if (filters!.isNotEmpty)
                 Positioned(
                   right: 10.0,
                   top: 10.0,
